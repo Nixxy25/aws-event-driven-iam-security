@@ -1,0 +1,28 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "DenyDeletingOrStrippingOtherUsers",
+            "Effect": "Deny",
+            "Action": [
+                "iam:DeleteUser",
+                "iam:DeleteLoginProfile",
+                "iam:DeleteAccessKey",
+                "iam:UpdateAccessKey",
+                "iam:DetachUserPolicy",
+                "iam:DeleteUserPolicy",
+                "iam:DeactivateMFADevice",
+                "iam:DeleteSigningCertificate",
+                "iam:DeleteSSHPublicKey",
+                "iam:DeleteServiceSpecificCredential"
+            ],
+            "NotResource": "arn:aws:iam::*:user/${aws:username}"
+        },
+        {
+            "Sid": "DenyRemovingGroupMemberships",
+            "Effect": "Deny",
+            "Action": "iam:RemoveUserFromGroup",
+            "Resource": "*"
+        }
+    ]
+}

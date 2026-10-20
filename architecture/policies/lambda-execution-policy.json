@@ -1,0 +1,59 @@
+{
+	"Version": "2012-10-17",
+	"Statement": [
+		{
+			"Sid": "ListUsers",
+			"Effect": "Allow",
+			"Action": "iam:ListUsers",
+			"Resource": "*"
+		},
+		{
+			"Sid": "SnapshotUsers",
+			"Effect": "Allow",
+			"Action": [
+				"iam:GetUser",
+				"iam:GetLoginProfile",
+				"iam:ListUserTags",
+				"iam:ListGroupsForUser",
+				"iam:ListAttachedUserPolicies",
+				"iam:ListUserPolicies",
+				"iam:GetUserPolicy",
+				"iam:ListAccessKeys",
+				"iam:ListMFADevices"
+			],
+			"Resource": "arn:aws:iam::502713970031:user/*"
+		},
+		{
+			"Sid": "RestoreAndQuarantine",
+			"Effect": "Allow",
+			"Action": [
+				"iam:CreateUser",
+				"iam:TagUser",
+				"iam:PutUserPermissionsBoundary",
+				"iam:AddUserToGroup",
+				"iam:AttachUserPolicy",
+				"iam:PutUserPolicy"
+			],
+			"Resource": [
+				"arn:aws:iam::502713970031:user/*",
+				"arn:aws:iam::502713970031:group/*"
+			]
+		},
+		{
+			"Sid": "SnapshotTable",
+			"Effect": "Allow",
+			"Action": [
+				"dynamodb:GetItem",
+				"dynamodb:PutItem",
+				"dynamodb:BatchWriteItem"
+			],
+			"Resource": "arn:aws:dynamodb:us-east-1:502713970031:table/iam-user-snapshots"
+		},
+		{
+			"Sid": "SendAlerts",
+			"Effect": "Allow",
+			"Action": "sns:Publish",
+			"Resource": "arn:aws:sns:us-east-1:502713970031:iam-user-deletion-alerts"
+		}
+	]
+}
